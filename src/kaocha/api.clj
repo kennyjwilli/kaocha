@@ -104,7 +104,12 @@
                                 (testable/test-seq test-plan))
                   (output/warn (str "No tests were found, make sure :test-paths and "
                                     ":ns-patterns are configured correctly in tests.edn."))
-                  (throw+ {:kaocha/early-exit 0 }))
+                  (throw+ {:kaocha/early-exit 0}))
+                (when (:parallel config)
+                  (output/warn (str "Parallelization enabled. This is a beta "
+                                    "feature. If you encounter errors, try "
+                                    "running with the feature disabled and "
+                                    "consider filing a PR.")))
                 (when (find-ns 'matcher-combinators.core)
                   (require 'kaocha.matcher-combinators))
 
